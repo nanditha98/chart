@@ -1,509 +1,500 @@
-// import {
-// 	Container,
-// 	Button,
-// 	Grid,
-// 	Paper,
-// 	TextField,
-// 	IconButton,
-// 	InputAdornment,
-// } from "@mui/material";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-// import React, { useState,useEffect } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+// import { useState } from 'react';
+// import { Form, Button } from 'react-bootstrap';
+// import './Login.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { Login } from "@mui/icons-material"
+import userEvent from "@testing-library/user-event"
 
-// const Login = () => {
-// const navigate = useNavigate();
-// const [values, setValues] = useState({
-// 	email: "",
-// 	pass: "",
-// 	showPass: false,
-// });
+// const LoginForm = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
 
-// // function handleChange(event) {
-// //     const { name, value } = event.target;
-// //     setInputValue({ ...values, [name]: value });
-// //   }
-
-//   const checkValidation = () => {
-//     let errors = values;
-
-
-//     // email validation
-//     const emailCond =
-//       "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-//     if (!values.email.trim()) {
-//       errors.email = "Email is required";
-//     } else if (!values.email.match(emailCond)) {
-//       errors.email = "Please ingress a valid email address";
-//     } else {
-//       errors.email = "";
-//     }
-
-//     //password validation
-//     const cond1 = "/^(?=.*[a-z]).{6,20}$/";
-//     const cond2 = "/^(?=.*[A-Z]).{6,20}$/";
-//     const cond3 = "/^(?=.*[0-9]).{6,20}$/";
-//     const password = values.password;
-//     if (!password) {
-//       errors.password = "password is required";
-//     } else if (password.length < 6) {
-//       errors.password = "Password must be longer than 6 characters";
-//     } else if (password.length >= 20) {
-//       errors.password = "Password must shorter than 20 characters";
-//     } else if (!password.match(cond1)) {
-//       errors.password = "Password must contain at least one lowercase";
-//     } else if (!password.match(cond2)) {
-//       errors.password = "Password must contain at least one capital letter";
-//     } else if (!password.match(cond3)) {
-//       errors.password = "Password must contain at least a number";
-//     } else {
-//       errors.password = "";
-//     }
-//     setValues(errors);
+//   const handleFormSubmit = (event) => {
+//     event.preventDefault();
+//     console.log('Email:', email);
+//     console.log('Password:', password);
 //   };
 
-//   useEffect(() => {
-//     checkValidation();
-//   }, [values]);
+//   return (
+//     <div className="LoginForm">
+//       <Form onSubmit={handleFormSubmit}>
+//         <Form.Group className="mb-3" controlId="formBasicEmail">
+//           <Form.Label>Email address</Form.Label>
+//           <Form.Control
+//             type="email"
+//             placeholder="Enter email"
+//             value={email}
+//             onChange={(event) => setEmail(event.target.value)}
+//           />
+//         </Form.Group>
 
+//         <Form.Group className="mb-3" controlId="formBasicPassword">
+//           <Form.Label>Password</Form.Label>
+//           <Form.Control
+//             type="password"
+//             placeholder="Password"
+//             value={password}
+//             onChange={(event) => setPassword(event.target.value)}
+//           />
+//         </Form.Group>
 
-// const handleSubmit = (e) => {
-// 	e.preventDefault();
-// 	axios
-// 		.post("https://reqres.in/api/login", {
-// 			email: values.email,
-// 			password: values.pass,
-// 		})
-// 		.then((res) => {
-// 			localStorage.setItem("token", res.data.token);
-//             navigate("/home")
-// 		})
-// 		.catch((err) => console.error(err));
+//         <Button variant="primary" type="submit">
+//           Submit
+//         </Button>
+//       </Form>
+//     </div>
+//   );
 // };
-// const handlePassVisibilty = () => {
-// 	setValues({
-// 		...values,
-// 		showPass: !values.showPass,
-// 	});
+
+// export default LoginForm;
+
+
+// login username and password validation
+// import { useState } from 'react';
+// import { Form, Button, Alert } from 'react-bootstrap';
+
+// const LoginForm = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [showAlert, setShowAlert] = useState(false);
+
+//   const handleFormSubmit = (event) => {
+//     event.preventDefault();
+
+//     // Check if email and password are valid
+//     if (email === 'example@example.com' && password === 'password') {
+//       console.log('Login successful');
+//     } else {
+//       setShowAlert(true);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       {showAlert && (
+//         <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+//           <Alert.Heading>Invalid credentials</Alert.Heading>
+//           <p>Please check your email and password and try again.</p>
+//         </Alert>
+//       )}
+//       <Form onSubmit={handleFormSubmit}>
+//         <Form.Group className="mb-3" controlId="formBasicEmail">
+//           <Form.Label>Email address</Form.Label>
+//           <Form.Control
+//             type="email"
+//             placeholder="Enter email"
+//             value={email}
+//             onChange={(event) => setEmail(event.target.value)}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Form.Group className="mb-3" controlId="formBasicPassword">
+//           <Form.Label>Password</Form.Label>
+//           <Form.Control
+//             type="password"
+//             placeholder="Password"
+//             value={password}
+//             onChange={(event) => setPassword(event.target.value)}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Button variant="primary" type="submit">
+//           Submit
+//         </Button>
+//       </Form>
+//     </div>
+//   );
 // };
 
+// export default LoginForm;
 
 
-// 	return (
-// 		<div>
-// <Container maxWidth="sm">
-// <Grid
-// 	container
-// 	spacing={2}
-// 	direction="column"
-// 	justifyContent="center"
-// 	style={{ minHeight: "100vh" }}
-// >
-// <Paper elelvation={2} sx={{ padding: 5 }}>
-// <form onSubmit={handleSubmit}>
-// <Grid container direction="column" spacing={2}>
+// ........ user exist Code....
 
-// 	<Grid item>
-		
-// 		<TextField
-// 			type="email"
-// 			fullWidth
-// 			label="Enter your email"
-// 			placeholder="Email Address"
-// 			variant="outlined"
-// 			required
-// 			onChange={(e) => setValues({ ...values, email: e.target.value })}
-// 		/>
-// 		{values.email && <p>{values.email}</p>}
-	
-// 	</Grid>
 
-// 	<Grid item>
-    	
-// 	<TextField
-// 		type={values.showPass ? "text" : "password"}
-// 		fullWidth
-// 		label="Password"
-// 		placeholder="Password"
-// 		variant="outlined"
-// 		required
-		
-// 		onChange={(e) => setValues({ ...values, pass: e.target.value })}
-// 		InputProps={{
-// 			endAdornment: (
-// 				<InputAdornment position="end">
-// 					<IconButton
-// 						onClick={handlePassVisibilty}
-// 						aria-label="toggle password"
-// 						edge="end"
-// 					>
-// 						{values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
-// 					</IconButton>
-// 				</InputAdornment>
-// 			),
-// 		}}		
-// 	/>
-// 		{values.password && <p>{values.password}</p>}
-// 	</Grid>
-// 	<Grid item>
-// 	<Button type="submit" fullWidth variant="contained">
-// 	 Sign In
-// 	</Button>
-// 	</Grid>
-// </Grid>
-// </form>
-// </Paper>
-// </Grid>
-// </Container>
-// </div>
-// 	);
+// async function handleSubmit(event) {
+//   event.preventDefault();
+
+//   try {
+//     const response = await fetch('/api/checkUserExists', {
+//       method: 'POST',
+//       body: JSON.stringify({ email: formData.email }),
+//       headers: { 'Content-Type': 'application/json' }
+//     });
+
+//     const data = await response.json();
+
+//     if (data.exists) {
+//       setFormErrors({ email: 'User already exists' });
+//     } else {
+//       // Submit the form data to the server
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+// register form
+
+// import React, { useState } from 'react';
+
+// const RegisterForm = () => {
+//   const [formData, setFormData] = useState({
+//     firstName: '',
+//     lastName: '',
+//     email: '',
+//     password: '',
+//     confirmPassword: ''
+//   });
+
+//   const [errors, setErrors] = useState({});
+
+//   const handleChange = event => {
+//     setFormData({
+//       ...formData,
+//       [event.target.name]: event.target.value
+//     });
+//   };
+
+//   const handleSubmit = event => {
+//     event.preventDefault();
+//     const newErrors = validate(formData);
+//     if (Object.keys(newErrors).length > 0) {
+//       setErrors(newErrors);
+//     } else {
+//       // submit the form
+//     }
+//   };
+
+//   const validate = data => {
+//     const errors = {};
+//     if (!data.firstName) {
+//       errors.firstName = 'First name is required';
+//     }
+//     if (!data.lastName) {
+//       errors.lastName = 'Last name is required';
+//     }
+//     if (!data.email) {
+//       errors.email = 'Email is required';
+//     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+//       errors.email = 'Email is invalid';
+//     }
+//     if (!data.password) {
+//       errors.password = 'Password is required';
+//     } else if (data.password.length < 8) {
+//       errors.password = 'Password must be at least 8 characters long';
+//     }
+//     if (data.password !== data.confirmPassword) {
+//       errors.confirmPassword = 'Passwords do not match';
+//     }
+//     return errors;
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="firstName">First Name:</label>
+//         <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+//         {errors.firstName && <div className="error">{errors.firstName}</div>}
+//       </div>
+//       <div>
+//         <label htmlFor="lastName">Last Name:</label>
+//         <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+//         {errors.lastName && <div className="error">{errors.lastName}</div>}
+//       </div>
+//       <div>
+//         <label htmlFor="email">Email:</label>
+//         <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+//         {errors.email && <div className="error">{errors.email}</div>}
+//       </div>
+//       <div>
+//         <label htmlFor="password">Password:</label>
+//         <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+//         {errors.password && <div className="error">{errors.password}</div>}
+//       </div>
+//       <div>
+//         <label htmlFor="confirmPassword">Confirm Password:</label>
+//         <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+//         {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
+//       </div>
+//       <button type="submit">Register</button>
+//     </form>
+//   );
+// };
+
+// export default RegisterForm;
+
+
+// password validtion
+
+// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+// if (!passwordRegex.test(values.password)) {
+//    setError('Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character');
+//   return;
+// }
+
+// ...phone number validation..
+// function PhoneNumberForm() {
+//   const [phoneNumber, setPhoneNumber] = useState('');
+//   const [errors, setErrors] = useState({});
+
+//   function handleSubmit(e) {
+//     e.preventDefault();
+
+//     const errors = validatePhoneNumber();
+
+//     if (Object.keys(errors).length === 0) {
+//       // Submit form
+//     } else {
+//       setErrors(errors);
+//     }
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label>Phone Number:</label>
+//         <input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+//         {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
+//       </div>
+//       <button type="submit">Submit</button>
+//     </form>
+//   );
+// }
+
+// ..register useRes.register
+// import React, { useState } from 'react';
+// import axios from 'axios';
+// import './Login.css';
+
+// const Login = () => {
+//   const [formData, setFormData] = useState({
+//     email: '',
+//     password: ''
+//   });
+
+//   const [errors, setErrors] = useState({});
+
+//   const handleChange = event => {
+//     setFormData({
+//       ...formData,
+//       [event.target.name]: event.target.value
+//     });
+//   };
+
+//   const handleSubmit = event => {
+//     event.preventDefault();
+//     const newErrors = validate(formData);
+//     if (Object.keys(newErrors).length > 0) {
+//       setErrors(newErrors);
+//     } else {
+//       axios.post('/api/check-user', formData)
+//         .then(response => {
+//           if (response.data.exists) {
+//             // user exists, redirect to dashboard or perform other actions
+//           } else {
+//             // show error message that user is not registered
+//             setErrors({ login: 'This user is not registered.' });
+//           }
+//         })
+//         .catch(error => console.log(error));
+//     }
+//   };
+
+//   const validate = data => {
+//     const errors = {};
+//     if (!data.email) {
+//       errors.email = 'Email is required';
+//     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+//       errors.email = 'Email is invalid';
+//     }
+//     if (!data.password) {
+//       errors.password = 'Password is required';
+//     }
+//     return errors;
+//   };
+
+//   return (
+//     <div className="login-container">
+//       <form className="login-form" onSubmit={handleSubmit}>
+//         <h2>Login</h2>
+//         {errors.login && <div className="error">{errors.login}</div>}
+//         <div className="form-group">
+//           <label htmlFor="email">Email:</label>
+//           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+//           {errors.email && <div className="error">{errors.email}</div>}
+//         </div>
+//         <div className="form-group">
+//           <label htmlFor="password">Password:</label>
+//           <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+//           {errors.password && <div className="error">{errors.password}</div>}
+//         </div>
+//         <button type="submit">Login</button>
+//       </form>
+//     </div>
+//   );
 // };
 
 // export default Login;
 
 
+// ....already username exist userEvent
 
-
-
-
-
-
-
-
-// import { useRef, useState, useEffect, useContext } from 'react';
-// import AuthContext from '../Context/AuthProvider';
-
+// import React, { useState } from 'react';
 // import axios from 'axios';
-
+// import './Login.css';
 
 // const Login = () => {
-//     const { setAuth } = useContext(AuthContext);
-//     const userRef = useRef();
-//     const errRef = useRef();
+//   const [formData, setFormData] = useState({
+//     email: '',
+//     password: ''
+//   });
 
-//     const [user, setUser] = useState('');
-//     const [pwd, setPwd] = useState('');
-//     const [errMsg, setErrMsg] = useState('');
-//     const [success, setSuccess] = useState(false);
+//   const [errors, setErrors] = useState({});
 
-//     useEffect(() => {
-//         userRef.current.focus();
-//     }, [])
+//   const handleChange = event => {
+//     setFormData({
+//       ...formData,
+//       [event.target.name]: event.target.value
+//     });
+//   };
 
-//     useEffect(() => {
-//         setErrMsg('');
-//     }, [user, pwd])
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-
-//         try {
-//             const response = await axios.post("https://www.melivecode.com/api/login",
-			
-//                 JSON.stringify({ user, pwd }),
-//                 {
-//                     headers: { 'Content-Type': 'application/json' },
-//                     withCredentials: true
-//                 }
-//             );
-// 			console.log("response",response);
-//             console.log(JSON.stringify(response?.data));
-//             //console.log(JSON.stringify(response));
-//             // const accessToken = response?.data?.accessToken;
-//             // const roles = response?.data?.roles;
-//             setAuth({ user, pwd});
-//             setUser('');
-//             setPwd('');
-//             setSuccess(true);
-//         } catch (err) {
-//             if (!err?.response) {
-//                 setErrMsg('No Server Response');
-//             } else if (err.response?.status === 400) {
-//                 setErrMsg('Missing Username or Password');
-//             } else if (err.response?.status === 401) {
-//                 setErrMsg('Unauthorized');
-//             } else {
-//                 setErrMsg('Login Failed');
-//             }
-//             errRef.current.focus();
-//         }
+//   const handleSubmit = event => {
+//     event.preventDefault();
+//     const newErrors = validate(formData);
+//     if (Object.keys(newErrors).length > 0) {
+//       setErrors(newErrors);
+//     } else {
+//       axios.post('/api/check-user', formData)
+//         .then(response => {
+//           if (response.data.exists) {
+//             // user exists, redirect to dashboard or perform other actions
+//           } else {
+//             // show error message that user is not registered
+//             setErrors({ login: 'This user is not registered.' });
+//           }
+//         })
+//         .catch(error => console.log(error));
 //     }
+//   };
 
-//     return (
-//         <>
-//             {success ? (
-//                 <section>
-//                     <h1>You are logged in!</h1>
-//                     <br />
-//                     <p>
-//                         <a href="#">Go to Home</a>
-//                     </p>
-//                 </section>
-//             ) : (
-//                 <section>
-//                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-//                     <h1>Sign In</h1>
-//                     <form onSubmit={handleSubmit}>
-//                         <label htmlFor="username">Username:</label>
-//                         <input
-//                             type="email"
-//                             id="username"
-//                             ref={userRef}
-//                             autoComplete="off"
-//                             onChange={(e) => setUser(e.target.value)}
-//                             value={user}
-//                             required
-//                         />
+//   const validate = data => {
+//     const errors = {};
+//     if (!data.email) {
+//       errors.email = 'Email is required';
+//     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+//       errors.email = 'Email is invalid';
+//     }
+//     if (!data.password) {
+//       errors.password = 'Password is required';
+//     }
+//     return errors;
+//   };
 
-//                         <label htmlFor="password">Password:</label>
-//                         <input
-//                             type="password"
-//                             id="password"
-//                             onChange={(e) => setPwd(e.target.value)}
-//                             value={pwd}
-//                             required
-//                         />
-//                         <button>Sign In</button>
-//                     </form>
-//                     <p>
-//                         Need an Account?<br />
-//                         <span className="line">
-//                             {/*put router link here*/}
-//                             <a href="#">Sign Up</a>
-//                         </span>
-//                     </p>
-//                 </section>
-//             )}
-//         </>
-//     )
-// }
-
-// export default Login
-
-// import React,{useState} from "react";
-// import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// export default function Form() {
-// const [values, setValues] = useState({
-// 	 	email: "", 
-// 	    pass: "", 
-// 		showPass: false,
-//  });
-//   const {
-//     register,
-//     formState: { errors },
-//   } = useForm();
-// const navigate=useNavigate();
-// const handleSubmit = (e) => {
-// 	e.preventDefault();
-// 	axios
-// 		.post("https://reqres.in/api/login", {
-// 			email: values.email,
-// 			password: values.pass,
-// 		})
-// 		.then((res) => {
-// 			localStorage.setItem("token", res.data.token);
-//             navigate("/home")
-// 		})
-// 		.catch((err) => console.error(err));
-// };
+//   const handleBlur = event => {
+//     const { name, value } = event.target;
+//     if (value && name === 'email') {
+//       axios.post('/api/check-email', { email: value })
+//         .then(response => {
+//           if (response.data.exists) {
+//             setErrors({ ...errors, email: 'This email is already registered.' });
+//           }
+//         })
+//         .catch(error => console.log(error));
+//     }
+//   };
 
 //   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <h1>Registration</h1>
+//     <div className="login-container">
+//       <form className="login-form" onSubmit={handleSubmit}>
+//         <h2>Login</h2>
+//         {errors.login && <div className="error">{errors.login}</div>}
+//         <div className="form-group">
+//           <label htmlFor="email">Email:</label>
+//           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} onBlur={handleBlur} />
+//           {errors.email && <div className="error">{errors.email}</div>}
 //         </div>
-//         {/* <div>
-//           <label>Name</label>
-//           <input
-//             placeholder="Enter person name"
-//             {...register("name", { required: true })}
-//           />
-//           <error>
-//             {errors.name?.type === "required" && "Name is required"}
-//           </error>
-//         </div> */}
-//         <div>
-//           <label>Email</label>
-//           <input
-//             placeholder="Enter primary email"
-//             {...register("email", {
-//               required: true,
-//               pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-//             })}
-//           />
-//           <error>
-//             {errors.email?.type === "required" && "Email is required"}
-//             {errors.email?.type === "pattern" &&
-//               "Entered email is in wrong format"}
-//           </error>
+//         <div className="form-group">
+//           <label htmlFor="password">Password:</label>
+//           <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+//           {errors.password && <div className="error">{errors.password}</div>}
 //         </div>
-//         <div>
-//           <label>Password</label>
-//           <input
-//             placeholder="Enter password"
-//             {...register("password", {
-//               required: true,
-//               minLength: 5,
-//               maxLength: 20,
-//             })}
-//           />
-//           <error>
-//             {errors.password?.type === "minLength" &&
-//               "Entered password is less than 5 characters"}
-//             {errors.password?.type === "maxLength" &&
-//               "Entered password is more than 20 characters"}
-//           </error>
-//         </div>
-//         <div>
-//           <input className="button" type="submit" />
-//         </div>
+//         <button type="submit">Login</button>
 //       </form>
 //     </div>
 //   );
-// }
+// };
 
-// /
+// export default Login;
 
+// ..search bar 
+// import React, { useState } from 'react';
+// import { Link } from 'react-router-dom';
 
+// const Home = () => {
+//   const [searchTerm, setSearchTerm] = useState('');
 
+//   const handleSearch = (event) => {
+//     setSearchTerm(event.target.value);
+//   };
 
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         placeholder="Search..."
+//         value={searchTerm}
+//         onChange={handleSearch}
+//       />
+//       {searchTerm.length > 0 ? (
+//         // Render search results here
+//         <p>Search Results for "{searchTerm}"</p>
+//       ) : (
+//         // Render home page content here
+//         <p>Welcome to the Home Page</p>
+//       )}
+//       {searchTerm.length > 0 ? null : (
+//         <Link to="/other-page">Go to other page</Link>
+//       )}
+//     </div>
+//   );
+// };
 
+// export default Home;
 
+// ....responsive Login
+// import React from 'react';
+// import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
+// const Login = () => {
+//   return (
+//     <Container>
+//       <Row className="justify-content-center">
+//         <Col xs={12} md={6}>
+//           <h1>Login</h1>
+//           <Form>
+//             <Form.Group controlId="formBasicEmail">
+//               <Form.Label>Email address</Form.Label>
+//               <Form.Control type="email" placeholder="Enter email" />
+//             </Form.Group>
 
+//             <Form.Group controlId="formBasicPassword">
+//               <Form.Label>Password</Form.Label>
+//               <Form.Control type="password" placeholder="Password" />
+//             </Form.Group>
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+//             <Button variant="primary" type="submit">
+//               Submit
+//             </Button>
+//           </Form>
+//         </Col>
+//       </Row>
+//     </Container>
+//   );
+// };
 
-function RegistrationView() {
-	const navigate=useNavigate();
-  const [inputValues, setInputValue] = useState({
-    email:"",
-    password: "",
-   
-  });
-
-  const [validation, setValidation] = useState({
-	email:"",
-    password: "",
-  });
-
-  //handle submit updates
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setInputValue({ ...inputValues, [name]: value });
-  }
-
-  const checkValidation = () => {
-    let errors = validation;
-
-
-    // email validation
-    const emailCond =
-      "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-    if (!inputValues.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!inputValues.email.match(emailCond)) {
-      errors.email = "Please ingress a valid email address";
-    } else {
-      errors.email = "";
-    }
-
-    //password validation
-    const cond1 = "/^(?=.*[a-z]).{6,20}$/";
-    const cond2 = "/^(?=.*[A-Z]).{6,20}$/";
-    const cond3 = "/^(?=.*[0-9]).{6,20}$/";
-    const password = inputValues.password;
-    if (!password) {
-      errors.password = "password is required";
-    } else if (password.length < 6) {
-      errors.password = "Password must be longer than 6 characters";
-    } else if (password.length >= 20) {
-      errors.password = "Password must shorter than 20 characters";
-    } else if (!password.match(cond1)) {
-      errors.password = "Password must contain at least one lowercase";
-    } else if (!password.match(cond2)) {
-      errors.password = "Password must contain at least one capital letter";
-    } else if (!password.match(cond3)) {
-      errors.password = "Password must contain at least a number";
-    } else {
-      errors.password = "";
-    }
-
-   
-    setValidation(errors);
-  };
-
-  useEffect(() => {
-    checkValidation();
-  }, [inputValues]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-		axios
-		.post("https://www.melivecode.com/api/login", {
-			email: validation.email,
-			password: validation.pass,
-		})
-		.then((res) => {
-			localStorage.setItem("token", res.data.token);
-            navigate("/home")
-		})
-		.catch((err) => console.error(err));
-  };
-
-  return (
-    <div>
-      <div className="sign-up-form">
-        <form
-          id="registrationForm"
-          action="/"
-          method="POST"
-          onSubmit={handleSubmit}
-        >
-        
-       
-          <div className="form-control">
-            <input
-              placeholder="email"
-              type="email"
-              name="email"
-              className="input-field"
-              onChange={(e) => handleChange(e)}
-              value={inputValues.email}
-            />
-          </div>
-          {validation.email && <p>{validation.email}</p>}
-
-          <div className="form-control">
-            <input
-              placeholder="password"
-              type="password"
-              name="password"
-              className="input-field"
-              onChange={(e) => handleChange(e)}
-              value={inputValues.password}
-              required
-            />
-            {validation.password && <p>{validation.password}</p>}
-          </div>
-          <button type="submit" id="submit-button">
-            submit
-          </button>
-          <span className="form-input-login">
-            Already have an account? Login <a href="#">here</a>
-          </span>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-export default RegistrationView;
+// export default Login;
