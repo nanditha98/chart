@@ -1,9 +1,10 @@
 // import React from 'react';
 // import './App.css';
 // import { BrowserRouter } from 'react-router-dom';
-// import SideNav from './Main/SideNav/SideNav';
-// import Reg from './components/Monitor';
+// // import SideNav from './Main/SideNav/SideNav';
+// // import Reg from './components/Monitor';
 // import Main from './New/NewLogin/NewLogin';
+// import Hel from './Hey/Hom/Hom';
 
 // function App() {
 //   return (
@@ -11,7 +12,8 @@
 //      <BrowserRouter>
 //       {/* <SideNav/> */}
 //       {/* <Reg/> */}
-//       <Main/>
+//       {/* <Main/> */}
+//       <Hel/>
 //      </BrowserRouter>
 //     </div>
 //   );
@@ -19,55 +21,55 @@
 
 // export default App;
 
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import Records from './New/NewLogin/NewLogin';
-import NewPagination from './New/NewLogin/NewPagination';
+// import React, { useState, useEffect } from 'react'
+// import axios from 'axios'
+// import Records from './New/NewLogin/NewLogin';
+// import NewPagination from './New/NewLogin/NewPagination';
 
-function App() {
+// function App() {
 
-    // To hold the actual data
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true);
+//     // To hold the actual data
+//     const [data, setData] = useState([])
+//     const [loading, setLoading] = useState(true);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [recordsPerPage] = useState(10);
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const [recordsPerPage] = useState(10);
 
 
-    useEffect(() => {
-        axios.get('MOCK_DATA.json')
-            .then(res => {
-                    setData(res.data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    alert('There was an error while retrieving the data')
-                })
-    }, [])
+//     useEffect(() => {
+//         axios.get('MOCK_DATA.json')
+//             .then(res => {
+//                     setData(res.data);
+//                     setLoading(false);
+//                 })
+//                 .catch(() => {
+//                     alert('There was an error while retrieving the data')
+//                 })
+//     }, [])
 
-    const indexOfLastRecord = currentPage * recordsPerPage;
-    // console.log("indexOfLastRecord",indexOfLastRecord);
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-    // console.log("indexOfFirstRecord",indexOfFirstRecord);
-    const currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
-    // console.log("currentRecords",currentRecords);
-    const nPages = Math.ceil(data.length / recordsPerPage)
-    // console.log("nPages",nPages);
+//     const indexOfLastRecord = currentPage * recordsPerPage;
+//     // console.log("indexOfLastRecord",indexOfLastRecord);
+//     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+//     // console.log("indexOfFirstRecord",indexOfFirstRecord);
+//     const currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
+//     // console.log("currentRecords",currentRecords);
+//     const nPages = Math.ceil(data.length / recordsPerPage)
+//     // console.log("nPages",nPages);
 
-    return (
-        <div className='container mt-5'>
-            <h2> Simple Pagination Example in React </h2>
-            <Records data={currentRecords}/>
-            <NewPagination
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
-        </div>
-    );
-}
+//     return (
+//         <div className='container mt-5'>
+//             <h2> Simple Pagination Example in React </h2>
+//             <Records data={currentRecords}/>
+//             <NewPagination
+//                 nPages={nPages}
+//                 currentPage={currentPage}
+//                 setCurrentPage={setCurrentPage}
+//             />
+//         </div>
+//     );
+// }
 
-export default App;
+// export default App;
 
 // import React from 'react';
 // import {
@@ -269,3 +271,79 @@ export default App;
 //   );
 // };
 // export default App;
+
+
+
+import "./App.css";
+import { FiSearch } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+
+const App = () => {
+  // fetching data
+  const [users, setusers] = useState([]);
+
+  const fetchUsers = async () => {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    setusers(response.data);
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  // filter users
+
+  const [filtered, setfiltered] = useState([]);
+  const [search, setsearch] = useState("");
+
+  const searchRef = useRef();
+
+  useEffect(() => {
+    setfiltered(
+      users.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search]);
+
+  return (
+    <div className="app">
+      <div className="serach">
+        <div className="searchbox">
+          <input
+            type="text"
+            placeholder="search"
+            onChange={(e) => setsearch(e.target.value)}
+            ref={searchRef}
+          />
+          <FiSearch />
+        </div>
+        {search.length > 0 && (
+          <div className="dropdown">
+            {filtered.length > 0 ? (
+              filtered.map((item, index) => {
+                return (
+                  <div
+                    className="card"
+                    key={index}
+                    onClick={(e) => {
+                      searchRef.current.value = item.name;
+                      setsearch("");
+                    }}>
+                    <p>{item.name}</p>
+                  </div>
+                );
+              })
+            ) : (
+              <p>no match</p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default App;
