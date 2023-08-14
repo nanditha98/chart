@@ -1,92 +1,107 @@
-import React from "react";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchData } from './searchActions';
+import axios from 'axios';
 
-function Advancesearch() {
-  const [show, setShow] = useState(false);
+function SearchComponent() {
+  const dispatch = useDispatch();
+  const searchData = useSelector((state) => state.search);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(setSearchData({ [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.get('/api/search', { params: searchData });
+      // Handle the response from the backend
+    } catch (error) {
+      // Handle error
+    }
+  };
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form action="https://www.google.com/search">
-            <div class="top-bar">
-              <h1>Advanced Search</h1>
-              <div class="menu">
-                <a href="index.html">G. Search</a>
-                <a href="images.html">Image</a>
-              </div>
-            </div>
-
-            <div class="main_div">
-              <div class="column column1">
-                <span class="first">Find pages with...</span>
-
-                <div class="row">
-                  <label for="first">all these words:</label>
-                  <input type="text" id="first" name="as_q" />
-                </div>
-                <div class="row">
-                  <label for="second">this exact word or phrase:</label>
-                  <input type="text" id="second" name="as_epq" />
-                </div>
-                <div class="row">
-                  <label for="third">any of these words:</label>
-                  <input type="text" id="third" name="as_oq" />
-                </div>
-                <div class="row">
-                  <label for="fourth">none of these words:</label>
-                  <input type="text" id="fourth" name="as_eq" />
-                </div>
-                <button type="submit">Advanced Search</button>
-              </div>
-
-              <div class="column column2">
-                <span class="first">To do this in the search box.</span>
-
-                <div class="row">
-                  <p>Type the important words: tri-colour rat terrier</p>
-                </div>
-
-                <div class="row">
-                  <p>Put exact words in quotes: "rat terrier"</p>
-                </div>
-
-                <div class="row">
-                  <p>
-                    Type OR between all the words you want: miniature OR
-                    standard
-                  </p>
-                </div>
-
-                <div class="row">
-                  <p>
-                    Put a minus sign just before words that you don't want:
-                    -rodent, -"Jack Russell"
-                  </p>
-                </div>
-              </div>
-            </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="anyWords"
+        value={searchData.anyWords}
+        onChange={handleInputChange}
+        placeholder="Any words"
+      />
+      <input
+        type="text"
+        name="noneOfWords"
+        value={searchData.noneOfWords}
+        onChange={handleInputChange}
+        placeholder="None of words"
+      />
+      <input
+        type="text"
+        name="anyOfWords"
+        value={searchData.anyOfWords}
+        onChange={handleInputChange}
+        placeholder="Any of words"
+      />
+      <input
+        type="text"
+        name="exactWords"
+        value={searchData.exactWords}
+        onChange={handleInputChange}
+        placeholder="Exact words"
+      />
+      <button type="submit">Search</button>
+    </form>
   );
 }
-export default Advancesearch;
+
+export default SearchComponent;
+
+
+
+// store.js
+// import { createStore, combineReducers } from 'redux';
+// import searchReducer from './searchReducer';
+
+// const rootReducer = combineReducers({
+//   search: searchReducer,
+// });
+
+// const store = createStore(rootReducer);
+
+// export default store;
+
+// searchreducer.js
+// searchReducer.js
+// const initialState = {
+//   anyWords: '',
+//   noneOfWords: '',
+//   anyOfWords: '',
+//   exactWords: '',
+// };
+
+// const searchReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'SET_SEARCH_DATA':
+//       return {
+//         ...state,
+//         ...action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
+
+// export default searchReducer;
+
+// searchaction.js
+// searchActions.js
+// export const setSearchData = (searchData) => ({
+//   type: 'SET_SEARCH_DATA',
+//   payload: searchData,
+// });
+
+
